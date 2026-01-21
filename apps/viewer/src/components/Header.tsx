@@ -3,6 +3,7 @@
  */
 
 import { Sun, Moon, X } from 'lucide-react'
+import { useTranslation } from 'react-i18next'
 
 /**
  * CraftAgentLogo - The Craft Agent "C" logo
@@ -30,17 +31,20 @@ interface HeaderProps {
   sessionTitle?: string
   isDark: boolean
   onToggleTheme: () => void
+  language: 'en' | 'zh-CN'
+  onToggleLanguage: () => void
   onClear: () => void
 }
 
-export function Header({ hasSession, sessionTitle, isDark, onToggleTheme, onClear }: HeaderProps) {
+export function Header({ hasSession, sessionTitle, isDark, onToggleTheme, language, onToggleLanguage, onClear }: HeaderProps) {
+  const { t } = useTranslation()
   return (
     <header className="shrink-0 grid grid-cols-[auto_1fr_auto] items-center px-4 py-3">
       {/* Logo - links to main site */}
       <a
         href="https://agents.craft.do"
         className="hover:opacity-80 transition-opacity"
-        title="Craft Agent"
+        title={t('header.appTitle')}
       >
         <CraftAgentLogo className="w-6 h-6 text-[#9570BE]" />
       </a>
@@ -55,12 +59,20 @@ export function Header({ hasSession, sessionTitle, isDark, onToggleTheme, onClea
       </div>
 
       <div className="flex items-center gap-2">
+        <button
+          onClick={onToggleLanguage}
+          className="px-2 h-8 rounded-md bg-background shadow-minimal text-foreground/60 hover:text-foreground/80 transition-colors text-xs font-medium"
+          title={language === 'en' ? t('header.switchToChinese') : t('header.switchToEnglish')}
+        >
+          {language === 'en' ? 'EN' : '中文'}
+        </button>
+
         {/* Clear button (when session is loaded) */}
         {hasSession && (
           <button
             onClick={onClear}
             className="p-1.5 rounded-md bg-background shadow-minimal text-foreground/40 hover:text-foreground/70 transition-colors"
-            title="Clear session"
+            title={t('header.clearSession')}
           >
             <X className="w-4 h-4" />
           </button>
@@ -70,7 +82,7 @@ export function Header({ hasSession, sessionTitle, isDark, onToggleTheme, onClea
         <button
           onClick={onToggleTheme}
           className="p-1.5 rounded-md bg-background shadow-minimal text-foreground/40 hover:text-foreground/70 transition-colors"
-          title={isDark ? 'Switch to light mode' : 'Switch to dark mode'}
+          title={isDark ? t('header.switchToLight') : t('header.switchToDark')}
         >
           {isDark ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}
         </button>

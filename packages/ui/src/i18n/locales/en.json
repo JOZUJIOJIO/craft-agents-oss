@@ -1,0 +1,18 @@
+{
+  "actions": {
+    "copy": "Copy",
+    "copied": "Copied!",
+    "copiedShort": "Copied",
+    "closeEsc": "Close (Esc)"
+  },
+  "attachments": {
+    "clickToOpen": "Click to open {{name}}"
+  },
+  "fileTypes": {
+    "document": "Document",
+    "text": "Text",
+    "image": "Image",
+    "file": "File",
+    "config": "Config"
+  }
+}

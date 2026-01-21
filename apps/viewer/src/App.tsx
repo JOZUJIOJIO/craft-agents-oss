@@ -10,6 +10,7 @@
  */
 
 import { useState, useCallback, useEffect, useMemo } from 'react'
+import { useTranslation } from 'react-i18next'
 import type { StoredSession } from '@craft-agent/core'
 import {
   SessionViewer,
@@ -24,6 +25,7 @@ import {
 } from '@craft-agent/ui'
 import { SessionUpload } from './components/SessionUpload'
 import { Header } from './components/Header'
+import { getInitialLanguage, setLanguage, toggleLanguage, type ViewerLanguage } from './i18n'
 
 /** Default session ID for development */
 const DEV_SESSION_ID = 'tz5-13I84pwK_he'
@@ -44,14 +46,20 @@ function getSessionIdFromUrl(): string | null {
 }
 
 export function App() {
+  const { t } = useTranslation()
   const [session, setSession] = useState<StoredSession | null>(null)
   const [isLoading, setIsLoading] = useState(false)
-  const [error, setError] = useState<string | null>(null)
+  const [errorKey, setErrorKey] = useState<'sessionNotFound' | 'failedToLoadSession' | null>(null)
   const [sessionId, setSessionId] = useState<string | null>(() => getSessionIdFromUrl())
+  const [language, setLanguageState] = useState<ViewerLanguage>(() => getInitialLanguage())
   const [isDark, setIsDark] = useState(() => {
     // Check system preference on mount
     return window.matchMedia('(prefers-color-scheme: dark)').matches
   })
+
+  useEffect(() => {
+    void setLanguage(language)
+  }, [])
 
   // Fetch session from API when we have a session ID
   useEffect(() => {
@@ -59,15 +67,15 @@ export function App() {
 
     const fetchSession = async () => {
       setIsLoading(true)
-      setError(null)
+      setErrorKey(null)
 
       try {
         const response = await fetch(`/s/api/${sessionId}`)
         if (!response.ok) {
           if (response.status === 404) {
-            setError('Session not found')
+            setErrorKey('sessionNotFound')
           } else {
-            setError('Failed to load session')
+            setErrorKey('failedToLoadSession')
           }
           return
         }
@@ -76,7 +84,7 @@ export function App() {
         setSession(data)
       } catch (err) {
         console.error('Failed to fetch session:', err)
-        setError('Failed to load session')
+        setErrorKey('failedToLoadSession')
       } finally {
         setIsLoading(false)
       }
@@ -92,7 +100,7 @@ export function App() {
       setSessionId(newId)
       if (!newId) {
         setSession(null)
-        setError(null)
+        setErrorKey(null)
       }
     }
 
@@ -120,13 +128,18 @@ export function App() {
   const handleClear = useCallback(() => {
     setSession(null)
     setSessionId(null)
-    setError(null)
+    setErrorKey(null)
     // Update URL to root
     window.history.pushState({}, '', '/')
   }, [])
 
   const toggleTheme = useCallback(() => {
     setIsDark(prev => !prev)
+  }, [])
+
+  const handleToggleLanguage = useCallback(async () => {
+    const next = await toggleLanguage()
+    setLanguageState(next)
   }, [])
 
   // State for overlay
@@ -166,24 +179,26 @@ export function App() {
         sessionTitle={session?.name}
         isDark={isDark}
         onToggleTheme={toggleTheme}
+        language={language}
+        onToggleLanguage={handleToggleLanguage}
         onClear={handleClear}
       />
 
       {isLoading ? (
         <div className="flex-1 flex items-center justify-center p-8">
           <div className="text-center text-muted-foreground">
-            <div className="animate-pulse">Loading session...</div>
+            <div className="animate-pulse">{t('app.loadingSession')}</div>
           </div>
         </div>
-      ) : error ? (
+      ) : errorKey ? (
         <div className="flex-1 flex items-center justify-center p-8">
           <div className="text-center">
-            <div className="text-destructive mb-4">{error}</div>
+            <div className="text-destructive mb-4">{t(`errors.${errorKey}`)}</div>
             <button
               onClick={handleClear}
               className="px-4 py-2 rounded-md bg-background text-foreground shadow-sm border border-border hover:bg-accent transition-colors"
             >
-              Go back
+              {t('app.goBack')}
             </button>
           </div>
         </div>

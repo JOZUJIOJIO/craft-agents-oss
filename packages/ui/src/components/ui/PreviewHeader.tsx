@@ -10,7 +10,9 @@
 
 import * as React from 'react'
 import { X, type LucideIcon } from 'lucide-react'
+import { useTranslation } from 'react-i18next'
 import { cn } from '../../lib/utils'
+import { UI_I18N_NAMESPACE } from '../../i18n'
 
 /**
  * Badge variants using semantic colors
@@ -131,6 +133,7 @@ export function PreviewHeader({
   className,
   style,
 }: PreviewHeaderProps) {
+  const { t } = useTranslation(UI_I18N_NAMESPACE)
   return (
     <div
       className={cn(
@@ -160,7 +163,7 @@ export function PreviewHeader({
               'focus:outline-none focus-visible:ring-1 focus-visible:ring-ring'
             )}
             style={{ WebkitAppRegion: 'no-drag' } as React.CSSProperties}
-            title="Close (Esc)"
+            title={t('actions.closeEsc')}
           >
             <X className="w-4 h-4" />
           </button>

@@ -48,6 +48,7 @@ bun run electron:start
 - **Background Tasks**: Run long-running operations with progress tracking
 - **Dynamic Status System**: Customizable session workflow states (Todo, In Progress, Done, etc.)
 - **Theme System**: Cascading themes at app and workspace levels
+- **Language Switching**: Switch UI between English and 中文 (Electron + Viewer)
 - **Multi-File Diff**: VS Code-style window for viewing all file changes in a turn
 - **Skills**: Specialized agent instructions stored per-workspace
 - **File Attachments**: Drag-drop images, PDFs, Office documents with auto-conversion
@@ -173,6 +174,11 @@ Configuration is stored at `~/.craft-agent/`:
         ├── skills/          # Custom skills
         └── statuses/        # Status configuration
 ```
+
+### Language / i18n
+
+- **Electron (desktop app)**: Go to **Settings → Preferences → Language** and choose `English` or `中文`. This writes `language: "en" | "zh-CN"` to `~/.craft-agent/preferences.json` and updates the UI immediately.
+- **Viewer (web)**: Use the language toggle in the top-right header. This stores the selected language in `localStorage` under the key `craft-language`.
 
 ## Advanced Features
 

@@ -11,6 +11,7 @@
 
 import * as React from 'react'
 import { useState, useEffect, useMemo } from 'react'
+import { useTranslation } from 'react-i18next'
 import { PanelHeader } from '@/components/app-shell/PanelHeader'
 import { ScrollArea } from '@/components/ui/scroll-area'
 import { HeaderMenu } from '@/components/ui/HeaderMenu'
@@ -41,7 +42,10 @@ export const meta: DetailsPageMeta = {
  *
  * Note: We only show allowed patterns here. Anything not on this list is implicitly denied.
  */
-function buildDefaultPermissionsData(config: PermissionsConfigFile | null): PermissionRow[] {
+function buildDefaultPermissionsData(
+  config: PermissionsConfigFile | null,
+  getWriteToPattern: (path: string) => string
+): PermissionRow[] {
   if (!config) return []
 
   const rows: PermissionRow[] = []
@@ -77,7 +81,7 @@ function buildDefaultPermissionsData(config: PermissionsConfigFile | null): Perm
   // Write paths
   config.allowedWritePaths?.forEach((item) => {
     const { pattern, comment } = extractPatternInfo(item)
-    rows.push({ access: 'allowed', type: 'tool', pattern: `Write to: ${pattern}`, comment })
+    rows.push({ access: 'allowed', type: 'tool', pattern: getWriteToPattern(pattern), comment })
   })
 
   return rows
@@ -87,48 +91,46 @@ function buildDefaultPermissionsData(config: PermissionsConfigFile | null): Perm
  * Build custom permissions data from workspace permissions.json.
  * These are user-added patterns that extend the defaults.
  */
-function buildCustomPermissionsData(config: PermissionsConfigFile): PermissionRow[] {
+function buildCustomPermissionsData(
+  config: PermissionsConfigFile,
+  getWriteToPattern: (path: string) => string,
+  getComment: (type: PermissionRow['type']) => string
+): PermissionRow[] {
   const rows: PermissionRow[] = []
-
-  // Additional blocked tools
-  config.blockedTools?.forEach((item) => {
-    const pattern = typeof item === 'string' ? item : item.pattern
-    const comment = typeof item === 'string' ? 'Custom blocked tool' : (item.comment || 'Custom blocked tool')
-    rows.push({ access: 'blocked', type: 'tool', pattern, comment })
-  })
 
   // Additional bash patterns
   config.allowedBashPatterns?.forEach((item) => {
     const pattern = typeof item === 'string' ? item : item.pattern
-    const comment = typeof item === 'string' ? 'Custom bash pattern' : (item.comment || 'Custom bash pattern')
+    const comment = typeof item === 'string' ? getComment('bash') : (item.comment || getComment('bash'))
     rows.push({ access: 'allowed', type: 'bash', pattern, comment })
   })
 
   // Additional MCP patterns
   config.allowedMcpPatterns?.forEach((item) => {
     const pattern = typeof item === 'string' ? item : item.pattern
-    const comment = typeof item === 'string' ? 'Custom MCP pattern' : (item.comment || 'Custom MCP pattern')
+    const comment = typeof item === 'string' ? getComment('mcp') : (item.comment || getComment('mcp'))
     rows.push({ access: 'allowed', type: 'mcp', pattern, comment })
   })
 
   // API endpoints
   config.allowedApiEndpoints?.forEach((item) => {
     const pattern = `${item.method} ${item.path}`
-    rows.push({ access: 'allowed', type: 'api', pattern, comment: item.comment || 'Custom API endpoint' })
+    rows.push({ access: 'allowed', type: 'api', pattern, comment: item.comment || getComment('api') })
   })
 
   // Write paths are shown as allowed paths
   config.allowedWritePaths?.forEach((item) => {
     const pattern = typeof item === 'string' ? item : item.pattern
-    const comment = typeof item === 'string' ? 'Allowed write path' : (item.comment || 'Allowed write path')
+    const comment = typeof item === 'string' ? getComment('tool') : (item.comment || getComment('tool'))
     // Show as a special "tool" type since it's about Write/Edit operations
-    rows.push({ access: 'allowed', type: 'tool', pattern: `Write to: ${pattern}`, comment })
+    rows.push({ access: 'allowed', type: 'tool', pattern: getWriteToPattern(pattern), comment })
   })
 
   return rows
 }
 
 export default function PermissionsSettingsPage() {
+  const { t } = useTranslation()
   const { activeWorkspaceId } = useAppShellContext()
   const activeWorkspace = useActiveWorkspace()
 
@@ -139,13 +141,27 @@ export default function PermissionsSettingsPage() {
   const [customConfig, setCustomConfig] = useState<PermissionsConfigFile | null>(null)
 
   // Build default permissions data from ~/.craft-agent/permissions/default.json
-  const defaultPermissionsData = useMemo(() => buildDefaultPermissionsData(defaultConfig), [defaultConfig])
+  const defaultPermissionsData = useMemo(() => {
+    return buildDefaultPermissionsData(
+      defaultConfig,
+      (path) => t('permissionsSettings.writeToPrefix', { path })
+    )
+  }, [defaultConfig, t])
 
   // Build custom permissions data from workspace permissions.json
   const customPermissionsData = useMemo(() => {
     if (!customConfig) return []
-    return buildCustomPermissionsData(customConfig)
-  }, [customConfig])
+    return buildCustomPermissionsData(
+      customConfig,
+      (path) => t('permissionsSettings.writeToPrefix', { path }),
+      (type) => {
+        if (type === 'bash') return t('permissionsSettings.customComments.bash')
+        if (type === 'mcp') return t('permissionsSettings.customComments.mcp')
+        if (type === 'api') return t('permissionsSettings.customComments.api')
+        return t('permissionsSettings.customComments.write')
+      }
+    )
+  }, [customConfig, t])
 
   // Load both default and workspace permissions configs
   useEffect(() => {
@@ -192,7 +208,7 @@ export default function PermissionsSettingsPage() {
 
   return (
     <div className="h-full flex flex-col">
-      <PanelHeader title="Permissions" actions={<HeaderMenu route={routes.view.settings('permissions')} />} />
+      <PanelHeader title={t('permissionsSettings.title')} actions={<HeaderMenu route={routes.view.settings('permissions')} />} />
       <div className="flex-1 min-h-0 mask-fade-y">
         <ScrollArea className="h-full">
           <div className="px-5 py-7 max-w-3xl mx-auto">
@@ -205,8 +221,8 @@ export default function PermissionsSettingsPage() {
                 <>
                   {/* Default Permissions Section */}
                   <SettingsSection
-                    title="Default Permissions"
-                    description="App-level patterns allowed in Explore mode. Commands not on this list are blocked."
+                    title={t('permissionsSettings.sections.default.title')}
+                    description={t('permissionsSettings.sections.default.description')}
                     action={
                       // EditPopover for AI-assisted default permissions editing
                       defaultPermissionsPath ? (
@@ -214,7 +230,7 @@ export default function PermissionsSettingsPage() {
                           trigger={<EditButton />}
                           {...getEditConfig('default-permissions', defaultPermissionsPath)}
                           secondaryAction={{
-                            label: 'Edit File',
+                            label: t('permissionsSettings.actions.editFile'),
                             onClick: () => {
                               window.electronAPI.openFile(defaultPermissionsPath)
                             },
@@ -230,13 +246,14 @@ export default function PermissionsSettingsPage() {
                           searchable
                           maxHeight={350}
                           fullscreen
-                          fullscreenTitle="Default Permissions"
+                          fullscreenTitle={t('permissionsSettings.sections.default.fullscreenTitle')}
                         />
                       ) : (
                         <div className="p-8 text-center text-muted-foreground">
-                          <p className="text-sm">No default permissions found.</p>
+                          <p className="text-sm">{t('permissionsSettings.sections.default.empty.title')}</p>
                           <p className="text-xs mt-1 text-foreground/40">
-                            Default permissions should be at <code className="bg-foreground/5 px-1 rounded">~/.craft-agent/permissions/default.json</code>
+                            {t('permissionsSettings.sections.default.empty.hintPrefix')}{' '}
+                            <code className="bg-foreground/5 px-1 rounded">~/.craft-agent/permissions/default.json</code>
                           </p>
                         </div>
                       )}
@@ -245,8 +262,8 @@ export default function PermissionsSettingsPage() {
 
                   {/* Custom Permissions Section */}
                   <SettingsSection
-                    title="Workspace Customizations"
-                    description="Workspace-level patterns that extend the app defaults above."
+                    title={t('permissionsSettings.sections.workspace.title')}
+                    description={t('permissionsSettings.sections.workspace.description')}
                     action={
                       (() => {
                         // Get centralized edit config - all strings defined in EditPopover.tsx
@@ -257,7 +274,7 @@ export default function PermissionsSettingsPage() {
                             example={example}
                             context={context}
                             secondaryAction={activeWorkspace ? {
-                              label: 'Edit File',
+                              label: t('permissionsSettings.actions.editFile'),
                               onClick: () => {
                                 const permissionsPath = `${activeWorkspace.rootPath}/permissions.json`
                                 window.electronAPI.openFile(permissionsPath)
@@ -275,13 +292,13 @@ export default function PermissionsSettingsPage() {
                           searchable
                           maxHeight={350}
                           fullscreen
-                          fullscreenTitle="Workspace Customizations"
+                          fullscreenTitle={t('permissionsSettings.sections.workspace.fullscreenTitle')}
                         />
                       ) : (
                         <div className="p-8 text-center text-muted-foreground">
-                          <p className="text-sm">No custom permissions configured.</p>
+                          <p className="text-sm">{t('permissionsSettings.sections.workspace.empty.title')}</p>
                           <p className="text-xs mt-1 text-foreground/40">
-                            Create a <code className="bg-foreground/5 px-1 rounded">permissions.json</code> file in your workspace to add custom rules.
+                            {t('permissionsSettings.sections.workspace.empty.hint')}
                           </p>
                         </div>
                       )}

@@ -1,0 +1,355 @@
+{
+  "preferences": {
+    "title": "偏好设置",
+    "basicInfo": {
+      "title": "基础信息",
+      "description": "帮助 Craft Agent 更好地为你个性化回答。"
+    },
+    "location": {
+      "title": "位置",
+      "description": "用于天气、本地时间与区域上下文等与位置相关的回答。"
+    },
+    "notes": {
+      "title": "备注",
+      "description": "自由补充的上下文，帮助 Craft Agent 理解你的偏好。",
+      "placeholder": "填写你希望 Craft Agent 了解的其它信息…",
+      "editFile": "编辑文件"
+    },
+    "fields": {
+      "name": {
+        "label": "称呼",
+        "description": "Craft Agent 应该如何称呼你。",
+        "placeholder": "你的名字"
+      },
+      "timezone": {
+        "label": "时区",
+        "description": "用于“明天”“下周”等相对日期的理解。",
+        "placeholder": "例如：Asia/Shanghai"
+      },
+      "language": {
+        "label": "语言",
+        "description": "应用界面与 Craft Agent 回复的首选语言。",
+        "placeholder": "选择语言…"
+      },
+      "city": {
+        "label": "城市",
+        "description": "用于本地信息与上下文。",
+        "placeholder": "例如：上海"
+      },
+      "country": {
+        "label": "国家/地区",
+        "description": "用于区域格式与上下文。",
+        "placeholder": "例如：中国"
+      }
+    }
+  },
+  "languages": {
+    "en": "English",
+    "zh-CN": "中文"
+  },
+  "settingsNav": {
+    "openInNewWindow": "在新窗口打开",
+    "items": {
+      "app": {
+        "label": "应用",
+        "description": "外观、通知、计费"
+      },
+      "workspace": {
+        "label": "工作区",
+        "description": "模型、模式切换、高级选项"
+      },
+      "permissions": {
+        "label": "权限",
+        "description": "Explore 模式下允许的命令"
+      },
+      "shortcuts": {
+        "label": "快捷键",
+        "description": "键盘快捷键参考"
+      },
+      "preferences": {
+        "label": "偏好设置",
+        "description": "你的个人偏好"
+      }
+    }
+  },
+  "sidebar": {
+    "newChat": "新建对话",
+    "allChats": "全部对话",
+    "flagged": "已标记",
+    "sources": "来源",
+    "skills": "技能",
+    "settings": "设置",
+    "sourceTypes": {
+      "api": "API",
+      "mcp": "MCP",
+      "local": "本地文件夹"
+    }
+  },
+  "sidebarMenu": {
+    "openInNewWindow": "在新窗口打开",
+    "configureStatuses": "配置状态",
+    "addSource": "添加来源",
+    "addSkill": "添加技能"
+  },
+  "appSettings": {
+    "title": "应用设置",
+    "sections": {
+      "appearance": "外观",
+      "notifications": "通知",
+      "billing": "计费",
+      "about": "关于"
+    },
+    "appearance": {
+      "mode": "模式",
+      "modeOptions": {
+        "system": "跟随系统",
+        "light": "浅色",
+        "dark": "深色"
+      },
+      "colorTheme": "颜色主题",
+      "colorThemeOptions": {
+        "default": "默认"
+      },
+      "font": "字体",
+      "fontOptions": {
+        "system": "系统"
+      }
+    },
+    "notifications": {
+      "desktop": {
+        "label": "桌面通知",
+        "description": "当 AI 完成对话处理时通知你。"
+      }
+    },
+    "billing": {
+      "description": "选择你支付 AI 使用费用的方式",
+      "paymentMethod": "支付方式",
+      "paymentMethodDescription": {
+        "apiKeyConfigured": "已配置 API Key",
+        "claudeConnected": "Claude 已连接",
+        "selectMethod": "请选择方式"
+      },
+      "methods": {
+        "claude": {
+          "label": "Claude Pro/Max",
+          "description": "使用你的 Pro 或 Max 订阅"
+        },
+        "apiKey": {
+          "label": "API Key",
+          "description": "使用 Anthropic Key 按量计费"
+        }
+      }
+    },
+    "about": {
+      "version": "版本",
+      "loading": "加载中…",
+      "updateTo": "更新到 {{version}}",
+      "checkForUpdates": "检查更新",
+      "checking": "检查中…",
+      "checkNow": "立即检查",
+      "installUpdate": "安装更新",
+      "restartToUpdate": "重启并更新"
+    }
+  },
+  "appMenu": {
+    "craftMenu": "Craft 菜单",
+    "newChat": "新建对话",
+    "settings": "设置…",
+    "keyboardShortcuts": "快捷键",
+    "storedUserPreferences": "已保存的用户偏好",
+    "resetApp": "重置应用…",
+    "goBack": "后退",
+    "goForward": "前进",
+    "hideSidebar": "隐藏侧边栏",
+    "showSidebar": "显示侧边栏"
+  },
+  "workspaceSettings": {
+    "title": "工作区设置",
+    "noWorkspaceSelected": "未选择工作区",
+    "sections": {
+      "workspaceInfo": "工作区信息",
+      "model": "模型",
+      "permissions": "权限",
+      "modeCycling": "模式切换",
+      "advanced": "高级"
+    },
+    "workspaceInfo": {
+      "name": {
+        "label": "名称",
+        "untitled": "未命名",
+        "edit": "编辑"
+      },
+      "icon": {
+        "label": "图标",
+        "uploading": "上传中…",
+        "change": "更改"
+      },
+      "renameDialog": {
+        "title": "重命名工作区",
+        "placeholder": "输入工作区名称…"
+      }
+    },
+    "model": {
+      "defaultModel": {
+        "label": "默认模型",
+        "description": "新对话使用的 AI 模型",
+        "options": {
+          "opus45": "复杂任务最强",
+          "sonnet45": "日常任务最佳",
+          "haiku45": "快速回答最快"
+        }
+      },
+      "thinkingLevel": {
+        "label": "思考等级",
+        "description": "新对话的推理深度"
+      }
+    },
+    "permissions": {
+      "defaultMode": {
+        "label": "默认模式",
+        "description": "控制 AI 能做什么",
+        "options": {
+          "safe": "只读探索，不允许修改",
+          "ask": "修改前询问",
+          "allowAll": "自动执行，不提示"
+        }
+      }
+    },
+    "modeCycling": {
+      "description": "选择 Shift+Tab 循环切换的模式",
+      "errors": {
+        "minTwo": "至少需要选择 2 个模式"
+      }
+    },
+    "advanced": {
+      "workingDirectory": {
+        "label": "默认工作目录",
+        "notSet": "未设置（使用会话文件夹）",
+        "clear": "清除",
+        "change": "更改…"
+      },
+      "localMcpServers": {
+        "label": "本地 MCP Servers",
+        "description": "启用 stdio 子进程服务器"
+      }
+    }
+  },
+  "permissionsSettings": {
+    "title": "权限",
+    "sections": {
+      "default": {
+        "title": "默认权限",
+        "description": "应用级 Explore 模式允许的规则。未在列表中的命令会被阻止。",
+        "fullscreenTitle": "默认权限",
+        "empty": {
+          "title": "未找到默认权限规则。",
+          "hintPrefix": "默认权限文件位置："
+        }
+      },
+      "workspace": {
+        "title": "工作区自定义",
+        "description": "工作区级规则，用于扩展上方应用默认规则。",
+        "fullscreenTitle": "工作区自定义",
+        "empty": {
+          "title": "尚未配置自定义权限。",
+          "hint": "在工作区根目录创建 permissions.json 以添加自定义规则。"
+        }
+      }
+    },
+    "actions": {
+      "editFile": "编辑文件"
+    },
+    "writeToPrefix": "写入：{{path}}",
+    "customComments": {
+      "bash": "自定义 Bash 规则",
+      "mcp": "自定义 MCP 规则",
+      "api": "自定义 API 端点",
+      "write": "允许写入路径"
+    }
+  },
+  "permissionsTable": {
+    "headers": {
+      "access": "访问",
+      "type": "类型",
+      "pattern": "匹配",
+      "comment": "备注"
+    },
+    "searchPlaceholder": "搜索规则…",
+    "empty": "没有权限规则",
+    "fullscreen": {
+      "view": "全屏查看",
+      "subtitle": "{{count}} 条规则",
+      "rule": "条规则",
+      "rules": "条规则"
+    },
+    "pattern": {
+      "copied": "已复制规则",
+      "copyFailed": "复制失败"
+    }
+  },
+  "permissionStatus": {
+    "allowed": "允许",
+    "blocked": "阻止",
+    "requiresPermission": "询问"
+  },
+  "permissionModes": {
+    "safe": {
+      "label": "探索"
+    },
+    "ask": {
+      "label": "询问后编辑"
+    },
+    "allowAll": {
+      "label": "自动"
+    }
+  },
+  "thinkingLevels": {
+    "off": {
+      "name": "不思考",
+      "description": "最快响应，不启用推理"
+    },
+    "think": {
+      "name": "思考",
+      "description": "速度与推理的平衡"
+    },
+    "max": {
+      "name": "深度思考",
+      "description": "复杂任务的最强推理"
+    }
+  },
+  "shortcuts": {
+    "title": "快捷键",
+    "sections": {
+      "global": "全局",
+      "navigation": "导航",
+      "sessionList": "会话列表",
+      "agentTree": "Agent Tree",
+      "chat": "对话"
+    },
+    "items": {
+      "focusSidebar": "聚焦侧边栏",
+      "focusSessionList": "聚焦会话列表",
+      "focusChatInput": "聚焦输入框",
+      "newChat": "新建对话",
+      "toggleSidebar": "切换侧边栏",
+      "openSettings": "打开设置",
+      "showKeyboardShortcuts": "显示快捷键",
+      "moveToNextZone": "移动到下一个区域",
+      "moveToPreviousZone": "移动到上一个区域",
+      "cyclePermissionMode": "循环切换权限模式",
+      "moveBetweenZones": "在区域间移动（列表中）",
+      "navigateItemsInList": "在列表中移动",
+      "goToFirstItem": "跳到第一个项目",
+      "goToLastItem": "跳到最后一个项目",
+      "closeDialogBlurInput": "关闭对话框 / 取消输入焦点",
+      "deleteSession": "删除会话",
+      "renameSession": "重命名会话",
+      "openContextMenu": "打开右键菜单",
+      "collapseFolder": "折叠文件夹",
+      "expandFolder": "展开文件夹",
+      "sendMessage": "发送消息",
+      "newLine": "换行",
+      "stopAgent": "停止 Agent（处理中）"
+    }
+  }
+}

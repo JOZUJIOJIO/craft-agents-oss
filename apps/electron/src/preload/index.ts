@@ -192,6 +192,13 @@ const api: ElectronAPI = {
   // User Preferences
   readPreferences: () => ipcRenderer.invoke(IPC_CHANNELS.PREFERENCES_READ),
   writePreferences: (content: string) => ipcRenderer.invoke(IPC_CHANNELS.PREFERENCES_WRITE, content),
+  onPreferencesChanged: (callback: (prefs: import('../shared/types').UserPreferences) => void) => {
+    const handler = (_event: Electron.IpcRendererEvent, prefs: import('../shared/types').UserPreferences) => {
+      callback(prefs)
+    }
+    ipcRenderer.on(IPC_CHANNELS.PREFERENCES_CHANGED, handler)
+    return () => ipcRenderer.removeListener(IPC_CHANNELS.PREFERENCES_CHANGED, handler)
+  },
 
   // Session Drafts (persisted input text)
   getDraft: (sessionId: string) => ipcRenderer.invoke(IPC_CHANNELS.DRAFTS_GET, sessionId),

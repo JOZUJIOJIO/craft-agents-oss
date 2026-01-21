@@ -384,6 +384,10 @@ export class SessionManager {
         sessionLog.info(`App theme changed`)
         this.broadcastAppThemeChanged(theme)
       },
+      onPreferencesChange: (prefs) => {
+        sessionLog.info('Preferences changed')
+        this.broadcastPreferencesChanged(prefs)
+      },
       onDefaultPermissionsChange: () => {
         sessionLog.info('Default permissions changed')
         this.broadcastDefaultPermissionsChanged()
@@ -431,6 +435,12 @@ export class SessionManager {
     if (!this.windowManager) return
     sessionLog.info(`Broadcasting app theme changed`)
     this.windowManager.broadcastToAll(IPC_CHANNELS.THEME_APP_CHANGED, theme)
+  }
+
+  private broadcastPreferencesChanged(prefs: import('@craft-agent/shared/config').UserPreferences): void {
+    if (!this.windowManager) return
+    sessionLog.info('Broadcasting preferences changed')
+    this.windowManager.broadcastToAll(IPC_CHANNELS.PREFERENCES_CHANGED, prefs)
   }
 
   /**

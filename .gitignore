@@ -31,6 +31,9 @@ report.[0-9]_.[0-9]_.[0-9]_.[0-9]_.json
 .wrangler
 .mintlify
 
+# Trae IDE
+.trae/
+
 # IntelliJ based IDEs
 .idea
 

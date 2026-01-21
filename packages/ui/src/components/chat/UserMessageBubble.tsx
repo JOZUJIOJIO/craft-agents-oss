@@ -14,9 +14,11 @@
 import { useState, useCallback, type ReactNode } from 'react'
 import type { StoredAttachment, ContentBadge } from '@craft-agent/core'
 import { FileText, Copy, Check } from 'lucide-react'
+import { useTranslation } from 'react-i18next'
 import { cn } from '../../lib/utils'
 import { Markdown } from '../markdown'
 import { FileTypeIcon, getFileTypeLabel } from './attachment-helpers'
+import { UI_I18N_NAMESPACE } from '../../i18n'
 
 // Fallback text icons for badges without iconDataUrl
 // Using simple characters since SVG rendering may not work in all contexts
@@ -270,6 +272,7 @@ export function UserMessageBubble({
   isQueued,
   ultrathink,
 }: UserMessageBubbleProps) {
+  const { t } = useTranslation(UI_I18N_NAMESPACE)
   const hasAttachments = attachments && attachments.length > 0
 
   // Copy to clipboard state
@@ -284,6 +287,23 @@ export function UserMessageBubble({
       console.error('Failed to copy:', err)
     }
   }, [content])
+
+  const formatFileTypeLabel = useCallback((label: string) => {
+    switch (label) {
+      case 'Document':
+        return t('fileTypes.document')
+      case 'Text':
+        return t('fileTypes.text')
+      case 'Image':
+        return t('fileTypes.image')
+      case 'File':
+        return t('fileTypes.file')
+      case 'Config':
+        return t('fileTypes.config')
+      default:
+        return label
+    }
+  }, [t])
 
   // Separate edit_request badges (rendered above bubble) from other badges (rendered inline)
   const editRequestBadges = badges?.filter(isEditRequestBadge) ?? []
@@ -318,7 +338,7 @@ export function UserMessageBubble({
                 key={att.id || i}
                 className="shrink-0 cursor-pointer hover:opacity-80 transition-opacity"
                 onClick={() => att.storedPath && onFileClick?.(att.storedPath)}
-                title={`Click to open ${att.name}`}
+                title={t('attachments.clickToOpen', { name: att.name })}
               >
                 {isImage ? (
                   /* IMAGE: Square thumbnail only */
@@ -354,7 +374,7 @@ export function UserMessageBubble({
                         {att.name}
                       </span>
                       <span className="text-[10px] text-muted-foreground">
-                        {getFileTypeLabel(att.type, att.mimeType, att.name)}
+                        {formatFileTypeLabel(getFileTypeLabel(att.type, att.mimeType, att.name))}
                       </span>
                     </div>
                   </div>
@@ -410,12 +430,12 @@ export function UserMessageBubble({
           {copied ? (
             <>
               <Check className="w-3 h-3" />
-              <span>Copied</span>
+              <span>{t('actions.copiedShort')}</span>
             </>
           ) : (
             <>
               <Copy className="w-3 h-3" />
-              <span>Copy</span>
+              <span>{t('actions.copy')}</span>
             </>
           )}
         </button>

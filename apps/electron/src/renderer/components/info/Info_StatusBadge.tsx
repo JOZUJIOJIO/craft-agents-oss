@@ -5,6 +5,7 @@
  */
 
 import * as React from 'react'
+import { useTranslation } from 'react-i18next'
 import { Info_Badge, type BadgeColor } from './Info_Badge'
 
 type PermissionStatus = 'allowed' | 'blocked' | 'requires-permission'
@@ -28,9 +29,16 @@ export function Info_StatusBadge({
   label,
   ...props
 }: Info_StatusBadgeProps) {
+  const { t } = useTranslation()
   const key: PermissionStatus = status ?? 'allowed'
   const config: { label: string; color: BadgeColor } = statusConfig[key]
-  const displayLabel = label ?? config.label
+  const displayLabel = label ?? (
+    key === 'allowed'
+      ? t('permissionStatus.allowed')
+      : key === 'blocked'
+        ? t('permissionStatus.blocked')
+        : t('permissionStatus.requiresPermission')
+  )
 
   return (
     <Info_Badge {...props} color={config.color}>

@@ -1,0 +1,28 @@
+{
+  "header": {
+    "appTitle": "Craft Agent",
+    "clearSession": "清空会话",
+    "switchToLight": "切换到浅色模式",
+    "switchToDark": "切换到深色模式",
+    "switchToChinese": "切换到中文",
+    "switchToEnglish": "切换到英文"
+  },
+  "app": {
+    "loadingSession": "正在加载会话…",
+    "goBack": "返回"
+  },
+  "errors": {
+    "sessionNotFound": "未找到该会话",
+    "failedToLoadSession": "加载会话失败",
+    "jsonOnly": "请上传 JSON 文件",
+    "invalidSessionFormat": "会话格式无效：缺少 id 或 messages 数组",
+    "failedToParseJson": "解析 JSON 文件失败"
+  },
+  "upload": {
+    "dropHere": "将会话文件拖放到这里",
+    "uploadJson": "上传会话 JSON",
+    "hint": "拖拽上传、点击选择文件，或从剪贴板粘贴",
+    "privacyLine1": "会话文件仅在浏览器本地处理。",
+    "privacyLine2": "不会上传任何数据到服务器。"
+  }
+}

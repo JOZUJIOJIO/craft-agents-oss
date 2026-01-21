@@ -72,13 +72,6 @@ function getSourceUrl(source: LoadedSource): string | null {
 function buildApiPermissionsData(config: PermissionsConfigFile): PermissionRow[] {
   const rows: PermissionRow[] = []
 
-  // Blocked Tools
-  config.blockedTools?.forEach((item) => {
-    const pattern = typeof item === 'string' ? item : item.pattern
-    const comment = typeof item === 'string' ? null : item.comment
-    rows.push({ access: 'blocked', type: 'tool', pattern, comment })
-  })
-
   // Allowed Bash Patterns
   config.allowedBashPatterns?.forEach((item) => {
     const pattern = typeof item === 'string' ? item : item.pattern
@@ -101,13 +94,6 @@ function buildApiPermissionsData(config: PermissionsConfigFile): PermissionRow[]
  */
 function buildMcpPermissionsData(config: PermissionsConfigFile): PermissionRow[] {
   const rows: PermissionRow[] = []
-
-  // Blocked Tools
-  config.blockedTools?.forEach((item) => {
-    const pattern = typeof item === 'string' ? item : item.pattern
-    const comment = typeof item === 'string' ? null : item.comment
-    rows.push({ access: 'blocked', type: 'mcp', pattern, comment })
-  })
 
   // Allowed MCP Patterns
   config.allowedMcpPatterns?.forEach((item) => {

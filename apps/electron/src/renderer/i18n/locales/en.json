@@ -1,0 +1,355 @@
+{
+  "preferences": {
+    "title": "Preferences",
+    "basicInfo": {
+      "title": "Basic Info",
+      "description": "Help Craft Agent personalize responses to you."
+    },
+    "location": {
+      "title": "Location",
+      "description": "Enables location-aware responses like weather, local time, and regional context."
+    },
+    "notes": {
+      "title": "Notes",
+      "description": "Free-form context that helps Craft Agent understand your preferences.",
+      "placeholder": "Any additional context you'd like Craft Agent to know...",
+      "editFile": "Edit File"
+    },
+    "fields": {
+      "name": {
+        "label": "Name",
+        "description": "How Craft Agent should address you.",
+        "placeholder": "Your name"
+      },
+      "timezone": {
+        "label": "Timezone",
+        "description": "Used for relative dates like 'tomorrow' or 'next week'.",
+        "placeholder": "e.g., America/New_York"
+      },
+      "language": {
+        "label": "Language",
+        "description": "Preferred language for the app and Craft Agent's responses.",
+        "placeholder": "Select language..."
+      },
+      "city": {
+        "label": "City",
+        "description": "Your city for local information and context.",
+        "placeholder": "e.g., New York"
+      },
+      "country": {
+        "label": "Country",
+        "description": "Your country for regional formatting and context.",
+        "placeholder": "e.g., USA"
+      }
+    }
+  },
+  "languages": {
+    "en": "English",
+    "zh-CN": "中文"
+  },
+  "settingsNav": {
+    "openInNewWindow": "Open in New Window",
+    "items": {
+      "app": {
+        "label": "App",
+        "description": "Appearance, notifications, billing"
+      },
+      "workspace": {
+        "label": "Workspace",
+        "description": "Model, mode cycling, advanced"
+      },
+      "permissions": {
+        "label": "Permissions",
+        "description": "Allowed commands in Explore mode"
+      },
+      "shortcuts": {
+        "label": "Shortcuts",
+        "description": "Keyboard shortcuts reference"
+      },
+      "preferences": {
+        "label": "Preferences",
+        "description": "Your personal preferences"
+      }
+    }
+  },
+  "sidebar": {
+    "newChat": "New Chat",
+    "allChats": "All Chats",
+    "flagged": "Flagged",
+    "sources": "Sources",
+    "skills": "Skills",
+    "settings": "Settings",
+    "sourceTypes": {
+      "api": "APIs",
+      "mcp": "MCPs",
+      "local": "Local Folders"
+    }
+  },
+  "sidebarMenu": {
+    "openInNewWindow": "Open in New Window",
+    "configureStatuses": "Configure Statuses",
+    "addSource": "Add Source",
+    "addSkill": "Add Skill"
+  },
+  "appSettings": {
+    "title": "App Settings",
+    "sections": {
+      "appearance": "Appearance",
+      "notifications": "Notifications",
+      "billing": "Billing",
+      "about": "About"
+    },
+    "appearance": {
+      "mode": "Mode",
+      "modeOptions": {
+        "system": "System",
+        "light": "Light",
+        "dark": "Dark"
+      },
+      "colorTheme": "Color theme",
+      "colorThemeOptions": {
+        "default": "Default"
+      },
+      "font": "Font",
+      "fontOptions": {
+        "system": "System"
+      }
+    },
+    "notifications": {
+      "desktop": {
+        "label": "Desktop notifications",
+        "description": "Get notified when AI finishes working in a chat."
+      }
+    },
+    "billing": {
+      "description": "Choose how you pay for AI usage",
+      "paymentMethod": "Payment method",
+      "paymentMethodDescription": {
+        "apiKeyConfigured": "API key configured",
+        "claudeConnected": "Claude connected",
+        "selectMethod": "Select a method"
+      },
+      "methods": {
+        "claude": {
+          "label": "Claude Pro/Max",
+          "description": "Use your Pro or Max subscription"
+        },
+        "apiKey": {
+          "label": "API Key",
+          "description": "Pay-as-you-go with your Anthropic key"
+        }
+      }
+    },
+    "about": {
+      "version": "Version",
+      "loading": "Loading...",
+      "updateTo": "Update to {{version}}",
+      "checkForUpdates": "Check for updates",
+      "checking": "Checking...",
+      "checkNow": "Check Now",
+      "installUpdate": "Install update",
+      "restartToUpdate": "Restart to Update"
+    }
+  },
+  "appMenu": {
+    "craftMenu": "Craft menu",
+    "newChat": "New Chat",
+    "settings": "Settings...",
+    "keyboardShortcuts": "Keyboard Shortcuts",
+    "storedUserPreferences": "Stored User Preferences",
+    "resetApp": "Reset App...",
+    "goBack": "Go back",
+    "goForward": "Go forward",
+    "hideSidebar": "Hide sidebar",
+    "showSidebar": "Show sidebar"
+  },
+  "workspaceSettings": {
+    "title": "Workspace Settings",
+    "noWorkspaceSelected": "No workspace selected",
+    "sections": {
+      "workspaceInfo": "Workspace Info",
+      "model": "Model",
+      "permissions": "Permissions",
+      "modeCycling": "Mode Cycling",
+      "advanced": "Advanced"
+    },
+    "workspaceInfo": {
+      "name": {
+        "label": "Name",
+        "untitled": "Untitled",
+        "edit": "Edit"
+      },
+      "icon": {
+        "label": "Icon",
+        "uploading": "Uploading...",
+        "change": "Change"
+      },
+      "renameDialog": {
+        "title": "Rename workspace",
+        "placeholder": "Enter workspace name..."
+      }
+    },
+    "model": {
+      "defaultModel": {
+        "label": "Default model",
+        "description": "AI model for new chats",
+        "options": {
+          "opus45": "Most capable for complex work",
+          "sonnet45": "Best for everyday tasks",
+          "haiku45": "Fastest for quick answers"
+        }
+      },
+      "thinkingLevel": {
+        "label": "Thinking level",
+        "description": "Reasoning depth for new chats"
+      }
+    },
+    "permissions": {
+      "defaultMode": {
+        "label": "Default mode",
+        "description": "Control what AI can do",
+        "options": {
+          "safe": "Read-only, no changes allowed",
+          "ask": "Prompts before making edits",
+          "allowAll": "Full autonomous execution"
+        }
+      }
+    },
+    "modeCycling": {
+      "description": "Select which modes to cycle through with Shift+Tab",
+      "errors": {
+        "minTwo": "At least 2 modes required"
+      }
+    },
+    "advanced": {
+      "workingDirectory": {
+        "label": "Default Working Directory",
+        "notSet": "Not set (uses session folder)",
+        "clear": "Clear",
+        "change": "Change..."
+      },
+      "localMcpServers": {
+        "label": "Local MCP Servers",
+        "description": "Enable stdio subprocess servers"
+      }
+    }
+  },
+  "permissionsSettings": {
+    "title": "Permissions",
+    "sections": {
+      "default": {
+        "title": "Default Permissions",
+        "description": "App-level patterns allowed in Explore mode. Commands not on this list are blocked.",
+        "fullscreenTitle": "Default Permissions",
+        "empty": {
+          "title": "No default permissions found.",
+          "hintPrefix": "Default permissions should be at"
+        }
+      },
+      "workspace": {
+        "title": "Workspace Customizations",
+        "description": "Workspace-level patterns that extend the app defaults above.",
+        "fullscreenTitle": "Workspace Customizations",
+        "empty": {
+          "title": "No custom permissions configured.",
+          "hint": "Create a permissions.json file in your workspace to add custom rules."
+        }
+      }
+    },
+    "actions": {
+      "editFile": "Edit File"
+    },
+    "writeToPrefix": "Write to: {{path}}",
+    "customComments": {
+      "bash": "Custom bash pattern",
+      "mcp": "Custom MCP pattern",
+      "api": "Custom API endpoint",
+      "write": "Allowed write path"
+    }
+  },
+  "permissionsTable": {
+    "headers": {
+      "access": "Access",
+      "type": "Type",
+      "pattern": "Pattern",
+      "comment": "Comment"
+    },
+    "searchPlaceholder": "Search patterns...",
+    "empty": "No permissions configured",
+    "fullscreen": {
+      "view": "View Fullscreen",
+      "subtitle": "{{count}} {{unit}}",
+      "rule": "rule",
+      "rules": "rules"
+    },
+    "pattern": {
+      "copied": "Pattern copied to clipboard",
+      "copyFailed": "Failed to copy pattern"
+    }
+  },
+  "permissionStatus": {
+    "allowed": "Allowed",
+    "blocked": "Blocked",
+    "requiresPermission": "Ask"
+  },
+  "permissionModes": {
+    "safe": {
+      "label": "Explore"
+    },
+    "ask": {
+      "label": "Ask to Edit"
+    },
+    "allowAll": {
+      "label": "Auto"
+    }
+  },
+  "thinkingLevels": {
+    "off": {
+      "name": "No Thinking",
+      "description": "Fastest responses, no reasoning"
+    },
+    "think": {
+      "name": "Thinking",
+      "description": "Balanced speed and reasoning"
+    },
+    "max": {
+      "name": "Max Thinking",
+      "description": "Deepest reasoning for complex tasks"
+    }
+  },
+  "shortcuts": {
+    "title": "Shortcuts",
+    "sections": {
+      "global": "Global",
+      "navigation": "Navigation",
+      "sessionList": "Session List",
+      "agentTree": "Agent Tree",
+      "chat": "Chat"
+    },
+    "items": {
+      "focusSidebar": "Focus sidebar",
+      "focusSessionList": "Focus session list",
+      "focusChatInput": "Focus chat input",
+      "newChat": "New chat",
+      "toggleSidebar": "Toggle sidebar",
+      "openSettings": "Open settings",
+      "showKeyboardShortcuts": "Show keyboard shortcuts",
+      "moveToNextZone": "Move to next zone",
+      "moveToPreviousZone": "Move to previous zone",
+      "cyclePermissionMode": "Cycle permission mode",
+      "moveBetweenZones": "Move between zones (in lists)",
+      "navigateItemsInList": "Navigate items in list",
+      "goToFirstItem": "Go to first item",
+      "goToLastItem": "Go to last item",
+      "closeDialogBlurInput": "Close dialog / blur input",
+      "deleteSession": "Delete session",
+      "renameSession": "Rename session",
+      "openContextMenu": "Open context menu",
+      "collapseFolder": "Collapse folder",
+      "expandFolder": "Expand folder",
+      "sendMessage": "Send message",
+      "newLine": "New line",
+      "stopAgent": "Stop agent (when processing)"
+    }
+  }
+}

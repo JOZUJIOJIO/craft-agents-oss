@@ -5,6 +5,7 @@
  */
 
 import * as React from 'react'
+import { useTranslation } from 'react-i18next'
 import { PanelHeader } from '@/components/app-shell/PanelHeader'
 import { Separator } from '@/components/ui/separator'
 import { ScrollArea } from '@/components/ui/scroll-area'
@@ -26,58 +27,6 @@ const isMac =
   navigator.platform.toUpperCase().indexOf('MAC') >= 0
 const cmdKey = isMac ? '⌘' : 'Ctrl'
 
-const sections: ShortcutSection[] = [
-  {
-    title: 'Global',
-    shortcuts: [
-      { keys: [cmdKey, '1'], description: 'Focus sidebar' },
-      { keys: [cmdKey, '2'], description: 'Focus session list' },
-      { keys: [cmdKey, '3'], description: 'Focus chat input' },
-      { keys: [cmdKey, 'N'], description: 'New chat' },
-      { keys: [cmdKey, 'B'], description: 'Toggle sidebar' },
-      { keys: [cmdKey, ','], description: 'Open settings' },
-      { keys: [cmdKey, '/'], description: 'Show keyboard shortcuts' },
-    ],
-  },
-  {
-    title: 'Navigation',
-    shortcuts: [
-      { keys: ['Tab'], description: 'Move to next zone' },
-      { keys: ['Shift', 'Tab'], description: 'Move to previous zone' },
-      { keys: ['←', '→'], description: 'Move between zones (in lists)' },
-      { keys: ['↑', '↓'], description: 'Navigate items in list' },
-      { keys: ['Home'], description: 'Go to first item' },
-      { keys: ['End'], description: 'Go to last item' },
-      { keys: ['Esc'], description: 'Close dialog / blur input' },
-    ],
-  },
-  {
-    title: 'Session List',
-    shortcuts: [
-      { keys: ['Enter'], description: 'Focus chat input' },
-      { keys: ['Delete'], description: 'Delete session' },
-      { keys: ['R'], description: 'Rename session' },
-      { keys: ['Right-click'], description: 'Open context menu' },
-    ],
-  },
-  {
-    title: 'Agent Tree',
-    shortcuts: [
-      { keys: ['←'], description: 'Collapse folder' },
-      { keys: ['→'], description: 'Expand folder' },
-    ],
-  },
-  {
-    title: 'Chat',
-    shortcuts: [
-      { keys: ['Enter'], description: 'Send message' },
-      { keys: ['Shift', 'Enter'], description: 'New line' },
-      { keys: [cmdKey, 'Enter'], description: 'Send message' },
-      { keys: ['Esc'], description: 'Stop agent (when processing)' },
-    ],
-  },
-]
-
 function Kbd({ children, className }: { children: React.ReactNode; className?: string }) {
   return (
     <kbd className={`inline-flex items-center justify-center min-w-[20px] h-5 px-1.5 text-[11px] font-medium bg-muted border border-border rounded shadow-sm ${className || ''}`}>
@@ -87,9 +36,63 @@ function Kbd({ children, className }: { children: React.ReactNode; className?: s
 }
 
 export default function ShortcutsPage() {
+  const { t } = useTranslation()
+
+  const sections: ShortcutSection[] = [
+    {
+      title: t('shortcuts.sections.global'),
+      shortcuts: [
+        { keys: [cmdKey, '1'], description: t('shortcuts.items.focusSidebar') },
+        { keys: [cmdKey, '2'], description: t('shortcuts.items.focusSessionList') },
+        { keys: [cmdKey, '3'], description: t('shortcuts.items.focusChatInput') },
+        { keys: [cmdKey, 'N'], description: t('shortcuts.items.newChat') },
+        { keys: [cmdKey, 'B'], description: t('shortcuts.items.toggleSidebar') },
+        { keys: [cmdKey, ','], description: t('shortcuts.items.openSettings') },
+        { keys: [cmdKey, '/'], description: t('shortcuts.items.showKeyboardShortcuts') },
+      ],
+    },
+    {
+      title: t('shortcuts.sections.navigation'),
+      shortcuts: [
+        { keys: ['Tab'], description: t('shortcuts.items.moveToNextZone') },
+        { keys: ['Shift', 'Tab'], description: t('shortcuts.items.moveToPreviousZone') },
+        { keys: ['←', '→'], description: t('shortcuts.items.moveBetweenZones') },
+        { keys: ['↑', '↓'], description: t('shortcuts.items.navigateItemsInList') },
+        { keys: ['Home'], description: t('shortcuts.items.goToFirstItem') },
+        { keys: ['End'], description: t('shortcuts.items.goToLastItem') },
+        { keys: ['Esc'], description: t('shortcuts.items.closeDialogBlurInput') },
+      ],
+    },
+    {
+      title: t('shortcuts.sections.sessionList'),
+      shortcuts: [
+        { keys: ['Enter'], description: t('shortcuts.items.focusChatInput') },
+        { keys: ['Delete'], description: t('shortcuts.items.deleteSession') },
+        { keys: ['R'], description: t('shortcuts.items.renameSession') },
+        { keys: ['Right-click'], description: t('shortcuts.items.openContextMenu') },
+      ],
+    },
+    {
+      title: t('shortcuts.sections.agentTree'),
+      shortcuts: [
+        { keys: ['←'], description: t('shortcuts.items.collapseFolder') },
+        { keys: ['→'], description: t('shortcuts.items.expandFolder') },
+      ],
+    },
+    {
+      title: t('shortcuts.sections.chat'),
+      shortcuts: [
+        { keys: ['Enter'], description: t('shortcuts.items.sendMessage') },
+        { keys: ['Shift', 'Enter'], description: t('shortcuts.items.newLine') },
+        { keys: [cmdKey, 'Enter'], description: t('shortcuts.items.sendMessage') },
+        { keys: ['Esc'], description: t('shortcuts.items.stopAgent') },
+      ],
+    },
+  ]
+
   return (
     <div className="h-full flex flex-col">
-      <PanelHeader title="Shortcuts" actions={<HeaderMenu route={routes.view.settings('shortcuts')} />} />
+      <PanelHeader title={t('shortcuts.title')} actions={<HeaderMenu route={routes.view.settings('shortcuts')} />} />
       <Separator />
       <ScrollArea className="flex-1">
         <div className="px-5 py-4">

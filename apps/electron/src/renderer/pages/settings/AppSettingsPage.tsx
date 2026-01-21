@@ -11,6 +11,7 @@
 
 import * as React from 'react'
 import { useState, useEffect, useCallback } from 'react'
+import { useTranslation } from 'react-i18next'
 import { PanelHeader } from '@/components/app-shell/PanelHeader'
 import { ScrollArea } from '@/components/ui/scroll-area'
 import { Input } from '@/components/ui/input'
@@ -322,6 +323,7 @@ function ClaudeOAuthDialogContent(props: ClaudeOAuthDialogProps) {
 // ============================================
 
 export default function AppSettingsPage() {
+  const { t } = useTranslation()
   const { mode, setMode, colorTheme, setColorTheme, setPreviewColorTheme, font, setFont } = useTheme()
 
   // Get workspace ID from context for loading preset themes
@@ -562,31 +564,31 @@ export default function AppSettingsPage() {
 
   return (
     <div className="h-full flex flex-col">
-      <PanelHeader title="App Settings" actions={<HeaderMenu route={routes.view.settings('app')} />} />
+      <PanelHeader title={t('appSettings.title')} actions={<HeaderMenu route={routes.view.settings('app')} />} />
       <div className="flex-1 min-h-0 mask-fade-y">
         <ScrollArea className="h-full">
           <div className="px-5 py-7 max-w-3xl mx-auto">
           <div className="space-y-6">
             {/* Appearance */}
-            <SettingsSection title="Appearance">
+            <SettingsSection title={t('appSettings.sections.appearance')}>
               <SettingsCard>
-                <SettingsRow label="Mode">
+                <SettingsRow label={t('appSettings.appearance.mode')}>
                   <SettingsSegmentedControl
                     value={mode}
                     onValueChange={setMode}
                     options={[
-                      { value: 'system', label: 'System', icon: <Monitor className="w-4 h-4" /> },
-                      { value: 'light', label: 'Light', icon: <Sun className="w-4 h-4" /> },
-                      { value: 'dark', label: 'Dark', icon: <Moon className="w-4 h-4" /> },
+                      { value: 'system', label: t('appSettings.appearance.modeOptions.system'), icon: <Monitor className="w-4 h-4" /> },
+                      { value: 'light', label: t('appSettings.appearance.modeOptions.light'), icon: <Sun className="w-4 h-4" /> },
+                      { value: 'dark', label: t('appSettings.appearance.modeOptions.dark'), icon: <Moon className="w-4 h-4" /> },
                     ]}
                   />
                 </SettingsRow>
-                <SettingsRow label="Color theme">
+                <SettingsRow label={t('appSettings.appearance.colorTheme')}>
                   <SettingsMenuSelect
                     value={colorTheme}
                     onValueChange={setColorTheme}
                     options={[
-                      { value: 'default', label: 'Default' },
+                      { value: 'default', label: t('appSettings.appearance.colorThemeOptions.default') },
                       ...presetThemes
                         .filter(t => t.id !== 'default')
                         .map(t => ({
@@ -596,13 +598,13 @@ export default function AppSettingsPage() {
                     ]}
                   />
                 </SettingsRow>
-                <SettingsRow label="Font">
+                <SettingsRow label={t('appSettings.appearance.font')}>
                   <SettingsSegmentedControl
                     value={font}
                     onValueChange={setFont}
                     options={[
                       { value: 'inter', label: 'Inter' },
-                      { value: 'system', label: 'System' },
+                      { value: 'system', label: t('appSettings.appearance.fontOptions.system') },
                     ]}
                   />
                 </SettingsRow>
@@ -610,11 +612,11 @@ export default function AppSettingsPage() {
             </SettingsSection>
 
             {/* Notifications */}
-            <SettingsSection title="Notifications">
+            <SettingsSection title={t('appSettings.sections.notifications')}>
               <SettingsCard>
                 <SettingsToggle
-                  label="Desktop notifications"
-                  description="Get notified when AI finishes working in a chat."
+                  label={t('appSettings.notifications.desktop.label')}
+                  description={t('appSettings.notifications.desktop.description')}
                   checked={notificationsEnabled}
                   onCheckedChange={handleNotificationsEnabledChange}
                 />
@@ -622,22 +624,22 @@ export default function AppSettingsPage() {
             </SettingsSection>
 
             {/* Billing */}
-            <SettingsSection title="Billing" description="Choose how you pay for AI usage">
+            <SettingsSection title={t('appSettings.sections.billing')} description={t('appSettings.billing.description')}>
               <SettingsCard>
                 <SettingsMenuSelectRow
-                  label="Payment method"
+                  label={t('appSettings.billing.paymentMethod')}
                   description={
                     authType === 'api_key' && hasCredential
-                      ? 'API key configured'
+                      ? t('appSettings.billing.paymentMethodDescription.apiKeyConfigured')
                       : authType === 'oauth_token' && hasCredential
-                        ? 'Claude connected'
-                        : 'Select a method'
+                        ? t('appSettings.billing.paymentMethodDescription.claudeConnected')
+                        : t('appSettings.billing.paymentMethodDescription.selectMethod')
                   }
                   value={authType}
                   onValueChange={(v) => handleMethodClick(v as AuthType)}
                   options={[
-                    { value: 'oauth_token', label: 'Claude Pro/Max', description: 'Use your Pro or Max subscription' },
-                    { value: 'api_key', label: 'API Key', description: 'Pay-as-you-go with your Anthropic key' },
+                    { value: 'oauth_token', label: t('appSettings.billing.methods.claude.label'), description: t('appSettings.billing.methods.claude.description') },
+                    { value: 'api_key', label: t('appSettings.billing.methods.apiKey.label'), description: t('appSettings.billing.methods.apiKey.description') },
                   ]}
                 />
               </SettingsCard>
@@ -703,12 +705,12 @@ export default function AppSettingsPage() {
             </SettingsSection>
 
             {/* About */}
-            <SettingsSection title="About">
+            <SettingsSection title={t('appSettings.sections.about')}>
               <SettingsCard>
-                <SettingsRow label="Version">
+                <SettingsRow label={t('appSettings.about.version')}>
                   <div className="flex items-center gap-2">
                     <span className="text-muted-foreground">
-                      {updateChecker.updateInfo?.currentVersion ?? 'Loading...'}
+                      {updateChecker.updateInfo?.currentVersion ?? t('appSettings.about.loading')}
                     </span>
                     {updateChecker.updateAvailable && updateChecker.updateInfo?.latestVersion && (
                       <Button
@@ -716,12 +718,12 @@ export default function AppSettingsPage() {
                         size="sm"
                         onClick={updateChecker.installUpdate}
                       >
-                        Update to {updateChecker.updateInfo.latestVersion}
+                        {t('appSettings.about.updateTo', { version: updateChecker.updateInfo.latestVersion })}
                       </Button>
                     )}
                   </div>
                 </SettingsRow>
-                <SettingsRow label="Check for updates">
+                <SettingsRow label={t('appSettings.about.checkForUpdates')}>
                   <Button
                     variant="outline"
                     size="sm"
@@ -731,20 +733,20 @@ export default function AppSettingsPage() {
                     {isCheckingForUpdates ? (
                       <>
                         <Spinner className="mr-1.5" />
-                        Checking...
+                        {t('appSettings.about.checking')}
                       </>
                     ) : (
-                      'Check Now'
+                      t('appSettings.about.checkNow')
                     )}
                   </Button>
                 </SettingsRow>
                 {updateChecker.isReadyToInstall && (
-                  <SettingsRow label="Install update">
+                  <SettingsRow label={t('appSettings.about.installUpdate')}>
                     <Button
                       size="sm"
                       onClick={updateChecker.installUpdate}
                     >
-                      Restart to Update
+                      {t('appSettings.about.restartToUpdate')}
                     </Button>
                   </SettingsRow>
                 )}

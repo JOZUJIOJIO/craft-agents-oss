@@ -1,0 +1,28 @@
+{
+  "header": {
+    "appTitle": "Craft Agent",
+    "clearSession": "Clear session",
+    "switchToLight": "Switch to light mode",
+    "switchToDark": "Switch to dark mode",
+    "switchToChinese": "Switch to Chinese",
+    "switchToEnglish": "Switch to English"
+  },
+  "app": {
+    "loadingSession": "Loading session...",
+    "goBack": "Go back"
+  },
+  "errors": {
+    "sessionNotFound": "Session not found",
+    "failedToLoadSession": "Failed to load session",
+    "jsonOnly": "Please upload a JSON file",
+    "invalidSessionFormat": "Invalid session format: missing id or messages array",
+    "failedToParseJson": "Failed to parse JSON file"
+  },
+  "upload": {
+    "dropHere": "Drop session file here",
+    "uploadJson": "Upload session JSON",
+    "hint": "Drag and drop, click to browse, or paste from clipboard",
+    "privacyLine1": "Session files are processed locally in your browser.",
+    "privacyLine2": "No data is uploaded to any server."
+  }
+}

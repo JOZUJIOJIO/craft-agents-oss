@@ -549,6 +549,7 @@ export const IPC_CHANNELS = {
   // User Preferences
   PREFERENCES_READ: 'preferences:read',
   PREFERENCES_WRITE: 'preferences:write',
+  PREFERENCES_CHANGED: 'preferences:changed',
 
   // Session Drafts (input text persisted across app restarts)
   DRAFTS_GET: 'drafts:get',
@@ -623,6 +624,19 @@ export const IPC_CHANNELS = {
   WINDOW_FOCUS_STATE: 'window:focusState',  // Broadcast: boolean (isFocused)
   WINDOW_GET_FOCUS_STATE: 'window:getFocusState',
 } as const
+
+export interface UserPreferences {
+  name?: string
+  timezone?: string
+  location?: {
+    city?: string
+    region?: string
+    country?: string
+  }
+  language?: string
+  notes?: string
+  updatedAt?: number
+}
 
 // Re-import types for ElectronAPI
 import type { Workspace, SessionMetadata, StoredAttachment as StoredAttachmentType } from '@craft-agent/core/types';
@@ -754,6 +768,7 @@ export interface ElectronAPI {
   // User Preferences
   readPreferences(): Promise<{ content: string; exists: boolean; path: string }>
   writePreferences(content: string): Promise<{ success: boolean; error?: string }>
+  onPreferencesChanged(callback: (prefs: UserPreferences) => void): () => void
 
   // Session Drafts (persisted input text)
   getDraft(sessionId: string): Promise<string | null>

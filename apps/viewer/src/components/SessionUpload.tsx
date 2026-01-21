@@ -9,6 +9,7 @@
 
 import * as React from 'react'
 import { useState, useCallback, useRef, useEffect } from 'react'
+import { useTranslation } from 'react-i18next'
 import type { StoredSession } from '@craft-agent/core'
 import { Upload, FileJson, AlertCircle } from 'lucide-react'
 
@@ -17,15 +18,16 @@ interface SessionUploadProps {
 }
 
 export function SessionUpload({ onSessionLoad }: SessionUploadProps) {
+  const { t } = useTranslation()
   const [isDragging, setIsDragging] = useState(false)
-  const [error, setError] = useState<string | null>(null)
+  const [errorKey, setErrorKey] = useState<'jsonOnly' | 'invalidSessionFormat' | 'failedToParseJson' | null>(null)
   const fileInputRef = useRef<HTMLInputElement>(null)
 
   const parseSessionFile = useCallback(async (file: File) => {
-    setError(null)
+    setErrorKey(null)
 
     if (!file.name.endsWith('.json')) {
-      setError('Please upload a JSON file')
+      setErrorKey('jsonOnly')
       return
     }
 
@@ -35,13 +37,13 @@ export function SessionUpload({ onSessionLoad }: SessionUploadProps) {
 
       // Validate basic session structure
       if (!data.id || !data.messages || !Array.isArray(data.messages)) {
-        setError('Invalid session format: missing id or messages array')
+        setErrorKey('invalidSessionFormat')
         return
       }
 
       onSessionLoad(data as StoredSession)
     } catch {
-      setError('Failed to parse JSON file')
+      setErrorKey('failedToParseJson')
     }
   }, [onSessionLoad])
 
@@ -129,10 +131,10 @@ export function SessionUpload({ onSessionLoad }: SessionUploadProps) {
 
         <div className="text-center">
           <p className="text-lg font-medium text-foreground">
-            {isDragging ? 'Drop session file here' : 'Upload session JSON'}
+            {isDragging ? t('upload.dropHere') : t('upload.uploadJson')}
           </p>
           <p className="mt-1 text-sm text-foreground/50">
-            Drag and drop, click to browse, or paste from clipboard
+            {t('upload.hint')}
           </p>
         </div>
 
@@ -145,16 +147,16 @@ export function SessionUpload({ onSessionLoad }: SessionUploadProps) {
         />
       </div>
 
-      {error && (
+      {errorKey && (
         <div className="mt-4 flex items-center gap-2 p-3 rounded-lg bg-destructive/10 text-destructive text-sm">
           <AlertCircle className="w-4 h-4 shrink-0" />
-          <span>{error}</span>
+          <span>{t(`errors.${errorKey}`)}</span>
         </div>
       )}
 
       <div className="mt-6 text-center text-xs text-foreground/30">
-        <p>Session files are processed locally in your browser.</p>
-        <p>No data is uploaded to any server.</p>
+        <p>{t('upload.privacyLine1')}</p>
+        <p>{t('upload.privacyLine2')}</p>
       </div>
     </div>
   )

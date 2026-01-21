@@ -9,6 +9,7 @@
 
 import * as React from 'react'
 import { useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import { MoreHorizontal, AppWindow } from 'lucide-react'
 import {
   DropdownMenu,
@@ -166,6 +167,7 @@ interface SettingsItemRowProps {
  * Tracks menu open state to keep "..." button visible when menu is open
  */
 function SettingsItemRow({ item, isSelected, isFirst, onSelect }: SettingsItemRowProps) {
+  const { t } = useTranslation()
   const [menuOpen, setMenuOpen] = useState(false)
   const Icon = item.icon
 
@@ -241,7 +243,7 @@ function SettingsItemRow({ item, isSelected, isFirst, onSelect }: SettingsItemRo
                 <DropdownMenuProvider>
                   <StyledDropdownMenuItem onClick={handleOpenInNewWindow}>
                     <AppWindow className="h-3.5 w-3.5" />
-                    <span className="flex-1">Open in New Window</span>
+                    <span className="flex-1">{t('settingsNav.openInNewWindow')}</span>
                   </StyledDropdownMenuItem>
                 </DropdownMenuProvider>
               </StyledDropdownMenuContent>
@@ -257,11 +259,20 @@ export default function SettingsNavigator({
   selectedSubpage,
   onSelectSubpage,
 }: SettingsNavigatorProps) {
+  const { t } = useTranslation()
+  const localizedItems = React.useMemo(() => {
+    return settingsItems.map((item) => ({
+      ...item,
+      label: t(`settingsNav.items.${item.id}.label`),
+      description: t(`settingsNav.items.${item.id}.description`),
+    }))
+  }, [t])
+
   return (
     <div className="flex flex-col h-full">
       <div className="flex-1 overflow-y-auto">
         <div className="pt-2">
-          {settingsItems.map((item, index) => (
+          {localizedItems.map((item, index) => (
             <SettingsItemRow
               key={item.id}
               item={item}
