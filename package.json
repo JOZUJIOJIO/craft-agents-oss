@@ -52,7 +52,9 @@
     "marketing:dev": "vite dev --config apps/marketing/vite.config.ts",
     "marketing:build": "vite build --config apps/marketing/vite.config.ts",
     "marketing:preview": "vite preview --config apps/marketing/vite.config.ts",
-    "docs:dev": "cd apps/online-docs && npm install && npx mintlify dev"
+    "docs:dev": "cd apps/online-docs && npm install && npx mintlify dev",
+    "upstream:update": "bun run scripts/sync-upstream.ts",
+    "upstream:update:dmg": "bun run scripts/sync-upstream.ts --dmg-mac"
   },
   "devDependencies": {
     "@aws-sdk/client-s3": "^3.947.0",

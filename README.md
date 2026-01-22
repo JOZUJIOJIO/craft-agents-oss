@@ -1,35 +1,29 @@
-# Craft Agents
+# Craft Agents（中文版）
 
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](LICENSE)
 [![Contributor Covenant](https://img.shields.io/badge/Contributor%20Covenant-2.1-4baaaa.svg)](CODE_OF_CONDUCT.md)
 
-Craft Agents is a tool we built so that we (at craft.do) can work effectively with agents. It enables intuitive multitasking, no-fluff connection to any API or Service, sharing sessions, and a more document (vs code) centric workflow - in a beautiful and fluid UI.
+Craft Agents 是一款面向 Craft 文档工作流的桌面智能代理工具。它提供更直观的多会话协作方式、对接任意 API / 服务的数据源能力、可共享的会话记录，以及更“以文档为中心”（而不仅仅是代码）的工作体验。
 
-It leans on Claude Code through the Claude Agent SDK - follows what we found great, and improves areas where we've desired improvements.
-
-It's built with Agent Native software principles in mind, and is highly customisable out of the box. One of the first of its kind.
-
-Craft Agents is open source under the Apache 2.0 license - so you are free to remix, change anything. And that's actually possible. We ourselves are building Craft Agents with Craft Agents only - no code editors - so really, any customisation is just a prompt away.
-
-We built Craft Agents because we wanted a better, more opinionated (and preferably non-CLI way) of working with the most powerful agents in the world. We'll continue to improve it, based on our experiences and intuition.
+项目基于 Claude Agent SDK（Claude Code 同源能力）构建，并在交互体验、可视化与可定制性上做了大量增强。仓库采用 Apache 2.0 许可证开源，你可以自由二次开发与定制。
 
 <img width="1578" height="894" alt="image" src="https://github.com/user-attachments/assets/3f1f2fe8-7cf6-4487-99ff-76f6c8c0a3fb" />
 
-## Installation
+## 安装
 
-### One-Line Install (Recommended)
+### 一行安装（推荐）
 
-**macOS / Linux:**
+**macOS / Linux：**
 ```bash
 curl -fsSL https://agents.craft.do/install-app.sh | bash
 ```
 
-**Windows (PowerShell):**
+**Windows（PowerShell）：**
 ```powershell
 irm https://agents.craft.do/install-app.ps1 | iex
 ```
 
-### Build from Source
+### 源码构建
 
 ```bash
 git clone https://github.com/lukilabs/craft-agents-oss.git
@@ -38,112 +32,143 @@ bun install
 bun run electron:start
 ```
 
-## Features
+## 功能亮点
 
-- **Multi-Session Inbox**: Desktop app with session management, status workflow, and flagging
-- **Claude Code Experience**: Streaming responses, tool visualization, real-time updates
-- **Craft MCP Integration**: Access to 32+ Craft document tools (blocks, collections, search, tasks)
-- **Sources**: Connect to MCP servers, REST APIs (Google, Slack, Microsoft), and local filesystems
-- **Permission Modes**: Three-level system (Explore, Ask to Edit, Auto) with customizable rules
-- **Background Tasks**: Run long-running operations with progress tracking
-- **Dynamic Status System**: Customizable session workflow states (Todo, In Progress, Done, etc.)
-- **Theme System**: Cascading themes at app and workspace levels
-- **Language Switching**: Switch UI between English and 中文 (Electron + Viewer)
-- **Multi-File Diff**: VS Code-style window for viewing all file changes in a turn
-- **Skills**: Specialized agent instructions stored per-workspace
-- **File Attachments**: Drag-drop images, PDFs, Office documents with auto-conversion
+- **多会话收件箱**：桌面端会话管理、状态流转、标记与筛选
+- **接近 Claude Code 的体验**：流式输出、工具调用可视化、实时进度与状态提示
+- **Craft MCP 深度集成**：内置多种 Craft 文档工具（区块、集合、搜索、任务等）
+- **数据源（Sources）**：支持 MCP Server、REST API（Google / Slack / Microsoft 等）与本地文件系统
+- **权限模式**：探索 / 询问后编辑 / 自动 三档权限，可配置规则
+- **后台任务**：长任务后台运行，进度可追踪
+- **动态状态系统**：可自定义会话工作流状态（待办、进行中、已完成等）
+- **主题系统**：应用级与工作区级主题联动
+- **中英文切换**：Electron + Viewer 均支持中文/英文界面切换
+- **多文件 Diff**：一次操作产生的多文件改动可统一查看（类 VS Code）
+- **技能（Skills）**：每个工作区可保存专属 Agent 指令/能力配置
+- **附件支持**：拖拽图片、PDF、Office 文档并自动转换
 
-## Quick Start
+## 快速开始
 
-1. **Launch the app** after installation
-2. **Choose billing**: Use your own Anthropic API key or Claude Max subscription
-3. **Create a workspace**: Set up a workspace to organize your sessions
-4. **Connect sources** (optional): Add MCP servers, REST APIs, or local filesystems
-5. **Start chatting**: Create sessions and interact with Claude
+1. 安装后启动应用
+2. 选择计费方式：使用 Anthropic API Key 或 Claude 订阅
+3. 创建工作区：用于组织会话与数据源
+4. （可选）连接数据源：添加 MCP Server、REST API 或本地文件夹
+5. 新建会话开始使用
 
-## Desktop App Features
+## 桌面端核心能力
 
-### Session Management
+### 会话管理
 
-- **Inbox/Archive**: Sessions organized by workflow status
-- **Flagging**: Mark important sessions for quick access
-- **Status Workflow**: Todo → In Progress → Needs Review → Done
-- **Session Naming**: AI-generated titles or manual naming
-- **Session Persistence**: Full conversation history saved to disk
+- **收件箱/归档**：按状态组织会话
+- **标记**：重要会话快速访问
+- **状态流转**：例如 待办 → 进行中 → 需复核 → 已完成
+- **会话命名**：支持 AI 自动命名或手动命名
+- **会话持久化**：对话历史写入本地磁盘
 
-### Sources
+### 数据源（Sources）
 
-Connect external data sources to your workspace:
+| 类型 | 示例 |
+|------|------|
+| **MCP Server** | Craft、Linear、GitHub、Notion、任意自定义 Server |
+| **REST API** | Google（Gmail/Calendar/Drive）、Slack、Microsoft |
+| **本地文件** | 文件系统、Obsidian Vault、Git 仓库等 |
 
-| Type | Examples |
-|------|----------|
-| **MCP Servers** | Craft, Linear, GitHub, Notion, custom servers |
-| **REST APIs** | Google (Gmail, Calendar, Drive), Slack, Microsoft |
-| **Local Files** | Filesystem, Obsidian vaults, Git repos |
+### 权限模式
 
-### Permission Modes
+| 模式 | 显示名 | 行为 |
+|------|--------|------|
+| `safe` | 探索 | 只读探索，阻止所有写入/修改 |
+| `ask` | 询问后编辑 | 修改前弹窗询问（默认） |
+| `allow-all` | 自动 | 自动批准命令与修改 |
 
-| Mode | Display | Behavior |
-|------|---------|----------|
-| `safe` | Explore | Read-only, blocks all write operations |
-| `ask` | Ask to Edit | Prompts for approval (default) |
-| `allow-all` | Auto | Auto-approves all commands |
+在聊天界面可使用 **SHIFT+TAB** 循环切换权限模式。
 
-Use **SHIFT+TAB** to cycle through modes in the chat interface.
+### 快捷键
 
-### Keyboard Shortcuts
+| 快捷键 | 作用 |
+|--------|------|
+| `Cmd+N` | 新建对话 |
+| `Cmd+1/2/3` | 聚焦侧边栏 / 会话列表 / 输入框 |
+| `Cmd+/` | 打开快捷键帮助 |
+| `SHIFT+TAB` | 循环切换权限模式 |
+| `Enter` | 发送消息 |
+| `Shift+Enter` | 换行 |
 
-| Shortcut | Action |
-|----------|--------|
-| `Cmd+N` | New chat |
-| `Cmd+1/2/3` | Focus sidebar/list/chat |
-| `Cmd+/` | Keyboard shortcuts dialog |
-| `SHIFT+TAB` | Cycle permission modes |
-| `Enter` | Send message |
-| `Shift+Enter` | New line |
-
-## Architecture
+## 项目结构
 
 ```
 craft-agent/
 ├── apps/
-│   └── electron/              # Desktop GUI (primary)
+│   └── electron/              # 桌面端（主要入口）
 │       └── src/
-│           ├── main/          # Electron main process
-│           ├── preload/       # Context bridge
-│           └── renderer/      # React UI (Vite + shadcn)
+│           ├── main/          # Electron 主进程
+│           ├── preload/       # Context Bridge
+│           └── renderer/      # React UI（Vite + shadcn）
 └── packages/
-    ├── core/                  # Shared types
-    └── shared/                # Business logic
+    ├── core/                  # 通用类型
+    └── shared/                # 业务逻辑
         └── src/
-            ├── agent/         # CraftAgent, permissions
-            ├── auth/          # OAuth, tokens
-            ├── config/        # Storage, preferences, themes
-            ├── credentials/   # AES-256-GCM encrypted storage
-            ├── sessions/      # Session persistence
-            ├── sources/       # MCP, API, local sources
-            └── statuses/      # Dynamic status system
+            ├── agent/         # Agent 与权限
+            ├── auth/          # OAuth / Token
+            ├── config/        # 配置、偏好、主题
+            ├── credentials/   # AES-256-GCM 加密存储
+            ├── sessions/      # 会话持久化
+            ├── sources/       # MCP / API / 本地数据源
+            └── statuses/      # 状态系统
 ```
 
-## Development
+## 开发
 
 ```bash
-# Hot reload development
+# 热更新开发
 bun run electron:dev
 
-# Build and run
+# 构建并运行
 bun run electron:start
 
-# Type checking
+# TypeScript 类型检查
 bun run typecheck:all
 
-# Debug logging (writes to ~/Library/Logs/Craft Agents/)
-# Logs are automatically enabled in development
+# 单元测试
+bun test
 ```
 
-### Environment Variables
+## 一键同步上游更新（推荐）
 
-OAuth integrations (Google, Slack, Microsoft) require credentials. Create a `.env` file:
+如果你已将官方仓库配置为 `upstream`，可用一条命令完成：拉取上游 → 合并/变基 →（可选）按最新 tag 同步版本号 → 安装依赖 → 类型检查 → 测试 →（可选）打包 DMG → 提交 → 推送。
+
+```bash
+bun run upstream:update
+```
+
+生成 macOS DMG（arm64 + x64）：
+
+```bash
+bun run upstream:update:dmg
+```
+
+常用参数：
+
+```bash
+# 使用 rebase（默认 merge，更安全不改历史）
+bun run upstream:update --strategy=rebase
+
+# 禁用自动暂存（默认会自动暂存未提交改动）
+bun run upstream:update --no-auto-stash
+
+# 不提交/不推送
+bun run upstream:update --no-commit --no-push
+
+# 跳过 install/typecheck/test
+bun run upstream:update --no-install --no-typecheck --no-test
+
+# 仅查看解析后的参数（不执行）
+bun run upstream:update --dry-run
+```
+
+## 环境变量
+
+如需启用 Google / Slack / Microsoft 等 OAuth 集成，请创建 `.env` 文件：
 
 ```bash
 MICROSOFT_OAUTH_CLIENT_ID=your-client-id
@@ -153,49 +178,49 @@ SLACK_OAUTH_CLIENT_ID=your-slack-client-id
 SLACK_OAUTH_CLIENT_SECRET=your-slack-client-secret
 ```
 
-See [Google Cloud Console](https://console.cloud.google.com/apis/credentials) to create OAuth credentials.
+可在 [Google Cloud Console](https://console.cloud.google.com/apis/credentials) 创建 OAuth 凭据。
 
-## Configuration
+## 配置目录
 
-Configuration is stored at `~/.craft-agent/`:
+默认配置存储在 `~/.craft-agent/`：
 
 ```
 ~/.craft-agent/
-├── config.json              # Main config (workspaces, auth type)
-├── credentials.enc          # Encrypted credentials (AES-256-GCM)
-├── preferences.json         # User preferences
-├── theme.json               # App-level theme
+├── config.json              # 主配置（工作区、认证类型等）
+├── credentials.enc          # 加密凭据（AES-256-GCM）
+├── preferences.json         # 用户偏好
+├── theme.json               # 应用级主题
 └── workspaces/
     └── {id}/
-        ├── config.json      # Workspace settings
-        ├── theme.json       # Workspace theme override
-        ├── sessions/        # Session data (JSONL)
-        ├── sources/         # Connected sources
-        ├── skills/          # Custom skills
-        └── statuses/        # Status configuration
+        ├── config.json      # 工作区设置
+        ├── theme.json       # 工作区主题覆盖
+        ├── sessions/        # 会话数据（JSONL）
+        ├── sources/         # 数据源配置
+        ├── skills/          # 技能配置
+        └── statuses/        # 状态配置
 ```
 
-### Language / i18n
+### 语言 / i18n
 
-- **Electron (desktop app)**: Go to **Settings → Preferences → Language** and choose `English` or `中文`. This writes `language: "en" | "zh-CN"` to `~/.craft-agent/preferences.json` and updates the UI immediately.
-- **Viewer (web)**: Use the language toggle in the top-right header. This stores the selected language in `localStorage` under the key `craft-language`.
+- **Electron（桌面端）**：在 **设置 → 偏好设置 → 语言** 中选择 `English` 或 `中文`，会写入 `~/.craft-agent/preferences.json` 并即时生效
+- **Viewer（Web）**：右上角切换语言，保存在 `localStorage` 的 `craft-language` 键
 
-## Advanced Features
+## 高级能力
 
-### Large Response Handling
+### 大响应处理
 
-Tool responses exceeding ~60KB are automatically summarized using Claude Haiku with intent-aware context. The `_intent` field is injected into MCP tool schemas to preserve summarization focus.
+当工具响应超过一定大小（例如 ~60KB）时，系统会自动进行摘要处理以保证对话体验；同时会向 MCP 工具 schema 注入 `_intent` 字段以提升摘要的针对性。
 
-### Deep Linking
+### 深度链接（Deep Linking）
 
-External apps can navigate using `craftagents://` URLs:
+支持使用 `craftagents://` URL 进行外部跳转：
 
 ```
-craftagents://allChats                    # All chats view
-craftagents://allChats/chat/session123    # Specific chat
-craftagents://settings                    # Settings
-craftagents://sources/source/github       # Source info
-craftagents://action/new-chat             # Create new chat
+craftagents://allChats
+craftagents://allChats/chat/session123
+craftagents://settings
+craftagents://sources/source/github
+craftagents://action/new-chat
 ```
 
 ## Tech Stack
